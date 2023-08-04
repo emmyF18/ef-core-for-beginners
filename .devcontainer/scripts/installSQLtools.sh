@@ -15,4 +15,5 @@ rm sqlpackage.zip
 chmod a+x /opt/sqlpackage/sqlpackage
 
 echo "Install Sqlite tools"
-apt-get -y install sqlite
+apt update
+apt -y install sqlite
