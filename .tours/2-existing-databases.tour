@@ -151,7 +151,7 @@
     {
       "file": "parts/2-existing-databases/ContosoPizza/Models/Customer.cs",
       "description": "Select **Insert Code** below to insert the code for the `Customer` partial class. Then select **Next**.\n\n```csharp\nnamespace ContosoPizza.Models;\n\npublic partial class Customer\n{\n    public string FirstLast\n    {\n        get => $\"{FirstName} {LastName}\";\n    }\n}\n```",
-      "line": 9,
+      "line": 17,
       "title": "Customer.cs"
     },
     {
@@ -173,7 +173,7 @@
     {
       "file": "parts/2-existing-databases/ContosoPizza/Program.cs",
       "description": "Select **Insert Code** below to replace the code in *Program.cs*.\n\n```csharp\nusing ContosoPizza.Data;\nusing ContosoPizza.Models;\n\nusing ContosoPizzaContext context = new ContosoPizzaContext();\n\nforeach (Customer c in context.Customers)\n{\n    Console.WriteLine($\"Name: {c.FirstLast}\");\n}\n```\n\nThe code above uses the property on the partial `Customer` class we created. We could now re-scaffold the model classes and the `FirstLast` property would be preserved.\n\nSave all your changes and run the code with `dotnet run` to see it in action.\n\nYou should receive the following console output:\n\n> ```\n> Name: Patrick Hunt\n> Name: Elsa York\n> ```",
-      "line": 11,
+      "line": 19,
       "selection": {
         "start": {
           "line": 1,

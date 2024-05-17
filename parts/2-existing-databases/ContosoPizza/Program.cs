@@ -1,2 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using ContosoPizza.Data;
+using ContosoPizza.Models;
+
+using ContosoPizzaContext context = new ContosoPizzaContext();
+
+foreach (Customer c in context.Customers)
+{
+    Console.WriteLine($"Name: {c.FirstLast}");
+}
