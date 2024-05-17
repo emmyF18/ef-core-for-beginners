@@ -21,7 +21,7 @@
     {
       "file": "parts/1-getting-started/ContosoPizza/Models/Product.cs",
       "description": "Select **Insert Code** below to insert the code for *Product.cs*. Then select **Next**.\n\n```csharp\nusing System.ComponentModel.DataAnnotations;\nusing System.ComponentModel.DataAnnotations.Schema;\n\nnamespace ContosoPizza.Models;\n\npublic class Product\n{\n    public int Id { get; set; }\n\n    public string Name { get; set; } = null!;\n\n    [Column(TypeName = \"decimal(6, 2)\")]\n    public decimal Price { get; set; }\n}\n```",
-      "line": 1,
+      "line": 14,
       "title": "Product.cs"
     },
     {
@@ -75,7 +75,7 @@
     {
       "file": "parts/1-getting-started/ContosoPizza/Models/Customer.cs",
       "description": "Select **Insert Code** below to insert the code for *Customer.cs*. Then select **Next**.\n\n```csharp\nnamespace ContosoPizza.Models;\n\npublic class Customer\n{\n    public int Id { get; set; }\n    public string FirstName { get; set; } = null!;\n    public string LastName { get; set; } = null!;\n    public string? Address { get; set; }\n    public string? Phone { get; set; }\n    public ICollection<Order> Orders { get; set; } = null!;\n}\n```",
-      "line": 11,
+      "line": 21,
       "title": "Customer.cs"
     },
     {
@@ -129,7 +129,7 @@
     {
       "file": "parts/1-getting-started/ContosoPizza/Models/Order.cs",
       "description": "Select **Insert Code** below to insert the code for *Order.cs*. Then select **Next**.\n\n```csharp\nnamespace ContosoPizza.Models;\n\npublic class Order\n{\n    public int Id { get; set; }\n    public DateTime OrderPlaced { get; set; }\n    public DateTime? OrderFulfilled { get; set; }\n    public int CustomerId { get; set; }\n\n    public Customer Customer { get; set; } = null!;\n    public ICollection<OrderDetail> OrderDetails { get; set; } = null!;\n}\n```",
-      "line": 12,
+      "line": 23,
       "title": "Order.cs"
     },
     {
@@ -167,7 +167,7 @@
     {
       "file": "parts/1-getting-started/ContosoPizza/Models/OrderDetail.cs",
       "description": "Select **Insert Code** below to insert the code for *OrderDetail.cs*. Then select **Next**.\n\n```csharp\nnamespace ContosoPizza.Models;\n\npublic class OrderDetail\n{\n    public int Id { get; set; }\n    public int Quantity { get; set; }\n    public int ProductId { get; set; }\n    public int OrderId { get; set; }\n\n    public Order Order { get; set; } = null!;\n    public Product Product { get; set; } = null!;\n}\n```",
-      "line": 12,
+      "line": 23,
       "title": "OrderDetail.cs"
     },
     {
@@ -189,7 +189,7 @@
     {
       "file": "parts/1-getting-started/ContosoPizza/Data/ContosoPizzaContext.cs",
       "description": "Select **Insert Code** below to insert the code for *ContosoPizzaContext.cs*. Then select **Next**.\n\n```csharp\nusing ContosoPizza.Models;\nusing Microsoft.EntityFrameworkCore;\n\nnamespace ContosoPizza.Data;\n\npublic class ContosoPizzaContext : DbContext\n{\n    public DbSet<Customer> Customers { get; set; } = null!;\n    public DbSet<Order> Orders { get; set; } = null!;\n    public DbSet<Product> Products { get; set; } = null!;\n    public DbSet<OrderDetail> OrderDetails { get; set; } = null!;\n\n    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)\n    {\n        optionsBuilder.UseSqlServer(@\"Connection String Here\");\n    }\n}\n```",
-      "line": 17,
+      "line": 33,
       "title": "ContosoPizzaContext.cs"
     },
     {
@@ -269,7 +269,7 @@
     {
       "file": "parts/1-getting-started/ContosoPizza/Program.cs",
       "description": "Select **Insert Code** below to insert the code for *Program.cs*. Then select **Next**.\n\n```csharp\nusing ContosoPizza.Data;\nusing ContosoPizza.Models;\n\nusing ContosoPizzaContext context = new ContosoPizzaContext();\n\nProduct veggieSpecial = new Product()\n{\n    Name = \"Veggie Special Pizza\",\n    Price = 9.99M\n};\ncontext.Products.Add(veggieSpecial);\n\nProduct deluxeMeat = new Product()\n{\n    Name = \"Deluxe Meat Pizza\",\n    Price = 12.99M\n};\ncontext.Add(deluxeMeat);\n\ncontext.SaveChanges();\n```",
-      "line": 41,
+      "line": 60,
       "selection": {
         "start": {
           "line": 1,
@@ -353,7 +353,7 @@
     {
       "file": "parts/1-getting-started/ContosoPizza/Program.cs",
       "description": "Select **Insert Code** below to replace the selected code. Then select **Next**.\n\n```csharp\nvar products = context.Products\n                    .Where(p => p.Price > 10.00M)\n                    .OrderBy(p => p.Name);\n\n\nforeach (Product p in products)\n{\n   Console.WriteLine($\"Id:    {p.Id}\");\n   Console.WriteLine($\"Name:  {p.Name}\");\n   Console.WriteLine($\"Price: {p.Price}\");\n   Console.WriteLine(new string('-', 20));\n}\n```",
-      "line": 44,
+      "line": 55,
       "selection": {
         "start": {
           "line": 6,
@@ -400,7 +400,7 @@
     {
       "file": "parts/1-getting-started/ContosoPizza/Program.cs",
       "description": "Select **Insert Code** below to replace the selected code. Then select **Next**.\n\n```csharp\nvar products = from product in context.Products\n               where product.Price > 10.00M\n               orderby product.Name\n               select product;\n```",
-      "line": 11,
+      "line": 20,
       "selection": {
         "start": {
           "line": 6,
@@ -436,7 +436,7 @@
     {
       "file": "parts/1-getting-started/ContosoPizza/Program.cs",
       "description": "Select **Insert Code** below to insert the \"update\" code. Then select **Next**.\n```csharp\n\nvar veggieSpecial = context.Products\n                       .Where(p => p.Name == \"Veggie Special Pizza\")\n                       .FirstOrDefault();\n\nif (veggieSpecial is Product)\n{\n    veggieSpecial.Price = 10.99M;\n}\n\ncontext.SaveChanges();\n\n```",
-      "line": 5,
+      "line": 71,
       "title": "Update an entity",
       "selection": {
         "start": {
